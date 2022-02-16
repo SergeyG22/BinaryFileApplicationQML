@@ -3,6 +3,7 @@ import QtQuick.Window 2.12
 import QtQuick.Layouts 1.3
 import Qt.labs.qmlmodels 1.0
 import QtQuick.Controls 2.5
+import QtQuick.Dialogs 1.2
 
 Window {
     id:window
@@ -45,6 +46,10 @@ Window {
                     border.width: 1
                     radius: 10
                 }
+
+                onClicked: {
+                    topFileDialog.open();
+                }
         }
 
 
@@ -71,6 +76,10 @@ Window {
                     border.color: bottomButtonFileDialog.hovered ? "#ffffff" : "#b9b9b9"
                     border.width: 1
                     radius: 10
+                }
+
+                onClicked: {
+                    bottomFileDialog.open()
                 }
         }
 
@@ -126,6 +135,9 @@ Window {
                     border.width: 1
                     radius: 10
                 }
+             onClicked: {
+                 listmodel.clear()
+             }
 
         }
 
@@ -202,27 +214,7 @@ Window {
         color: "#32162d"
 
         ListModel {
-            id: namemodel
-
-            ListElement {
-                name: "file1.bin [EQUIALENT] file4.bin"
-            }
-            ListElement {
-                name: "file1.bin [EQUIALENT] file6.bin"
-            }
-            ListElement {
-                name: "file1.bin [EQUIALENT] file4.bin"
-            }
-            ListElement {
-                name: "file1.bin [EQUIALENT] file6.bin"
-            }
-            ListElement {
-                name: "file1.bin [EQUIALENT] file4.bin"
-            }
-            ListElement {
-                name: "file1.bin [EQUIALENT] file6.bin"
-            }
-
+            id: listmodel
             ListElement {
                 name: "file1.bin [EQUIALENT] file4.bin"
             }
@@ -239,7 +231,7 @@ Window {
         }
 
         Component {
-            id: nameDelegate
+            id: listDelegate
             Text {
                 text: model.name
                 font.pixelSize: 0.05 * window.height
@@ -249,13 +241,35 @@ Window {
 
         ListView {
             anchors.fill: parent
-            model:namemodel
-            delegate: nameDelegate
+            model:listmodel
+            delegate: listDelegate
             clip:true
         }
 
 
     }
+
+    FileDialog {
+                id: topFileDialog
+                title: "Open file dialog"
+                folder: shortcuts.home
+                selectFolder: true
+                modality : Qt.WindowModal
+                onAccepted: {
+                    topEditbox.text = topFileDialog.folder
+                 }
+            }
+
+    FileDialog {
+                id: bottomFileDialog
+                title: "Open file dialog"
+                folder: shortcuts.home
+                selectFolder: true
+                modality : Qt.WindowModal
+                onAccepted: {
+                    bottomEditbox.text = bottomFileDialog.folder
+                 }
+            }
 
 
 }
