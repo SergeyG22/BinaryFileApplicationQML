@@ -7,6 +7,10 @@ import QtQuick.Dialogs 1.2
 
 Window {
     id:window
+
+    property int width_standart: 600
+    property int height_standart: 420
+
     visible: true
     width: 600
     height: 420
@@ -15,10 +19,16 @@ Window {
 
     ColumnLayout {
         id: columnLayout
-        x: parent.width / (600 / 422)           //parent.width / (width_window / layout_pos_x)
-        y: parent.height / (420 / 135)          //parent.height / (height_window / layout_pos_y)
-        width: parent.width / (600 /135)        //parent.width / (width_window / layout_width)
-        height: parent.height /(420 / 188)      //parent.height / (height_window / layout_height)
+
+        property int width_standart: 135
+        property int height_standart: 188
+        property int pos_x_standart: 422
+        property int pos_y_standart: 135
+
+        x: parent.width / (window.width_standart / pos_x_standart)
+        y: parent.height / (window.height_standart / pos_y_standart)
+        width: parent.width / (window.width_standart / columnLayout.width_standart)
+        height: parent.height / (window.height_standart / columnLayout.height_standart)
         spacing: 10
 
         Button {
@@ -154,10 +164,16 @@ Window {
 
     ColumnLayout {
         id: columnLayout1
-        x: parent.width / (600 / 422)            //parent.width / (width_window / layout_pos_x)
-        y: parent.height / (420 / 35)            //parent.height / (height_window / layout_pos_y)
-        width: parent.width / (600 / 110)        //parent.width / (width_window / layout_width)
-        height: parent.height / (420 / 60)       //parent.height / (height_window / layout_height)
+
+        property int width_standart: 110
+        property int height_standart: 60
+        property int pos_x_standart: 422
+        property int pos_y_standart: 35
+
+        x: parent.width / (window.width_standart / columnLayout1.pos_x_standart)
+        y: parent.height / (window.height_standart / columnLayout1.pos_y_standart)
+        width: parent.width / (window.width_standart / columnLayout1.width_standart)
+        height: parent.height / (window.height_standart / columnLayout1.height_standart)
 
         Text {
             id: topLabel
@@ -178,10 +194,16 @@ Window {
 
     ColumnLayout {
         id: columnLayout2
-        x: parent.width / (600 / 29)
-        y: parent.height / (420 / 25)
-        width: parent.width / (600 / 355)
-        height:parent.height /(420 / 70)
+
+        property int width_standart: 355
+        property int height_standart: 70
+        property int pos_x_standart: 29
+        property int pos_y_standart: 25
+
+        x: parent.width / (window.width_standart / columnLayout2.pos_x_standart)
+        y: parent.height / (window.height_standart / columnLayout2.pos_y_standart)
+        width: parent.width / (window.width_standart / columnLayout2.width_standart)
+        height: parent.height / (window.height_standart / columnLayout2.height_standart)
 
         TextField {
             id: topEditbox
@@ -210,10 +232,16 @@ Window {
 
     Rectangle {
         id: outputWindow
-        x: parent.width / (600 / 30)
-        y: parent.height / (420 / 110)
-        width: parent.width / (600 / 355)
-        height:parent.height /(420 / 240)
+
+        property int width_standart: 355
+        property int height_standart: 240
+        property int pos_x_standart: 30
+        property int pos_y_standart: 110
+
+        x: parent.width / (window.width_standart / outputWindow.pos_x_standart)
+        y: parent.height / (window.height_standart / outputWindow.pos_y_standart)
+        width: parent.width / (window.width_standart / outputWindow.width_standart)
+        height:parent.height /(window.height_standart / outputWindow.height_standart)
         border.color: "black"
         color: "#32162d"
 
@@ -243,7 +271,6 @@ Window {
                 title: "Open file dialog"
                 folder: shortcuts.home
                 selectFolder: true
-                modality : Qt.WindowModal
                 onAccepted: {
                     topEditbox.text = urlToPath(topFileDialog.folder)
                  }
@@ -254,7 +281,6 @@ Window {
                 title: "Open file dialog"
                 folder: shortcuts.home
                 selectFolder: true
-                modality : Qt.WindowModal
                 onAccepted: {
                     bottomEditbox.text = urlToPath(bottomFileDialog.folder);
                  }

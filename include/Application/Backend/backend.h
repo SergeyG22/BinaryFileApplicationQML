@@ -1,6 +1,8 @@
 #pragma once
 #include <QObject>
 #include <QVariantMap>
+#include <iostream>
+#include <QDebug>
 #include <boost/iostreams/device/mapped_file.hpp>
 #include <boost/algorithm/cxx14/equal.hpp>
 #include <boost/filesystem.hpp>
