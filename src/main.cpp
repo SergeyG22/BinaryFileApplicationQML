@@ -1,6 +1,7 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
+#include "include/Application/Backend/backend.h"
 
 int main(int argc, char *argv[])
 {
@@ -15,6 +16,9 @@ int main(int argc, char *argv[])
         if (!obj && url == objUrl)
             QCoreApplication::exit(-1);
     }, Qt::QueuedConnection);
+
+    BackendOperations backendOperations;
+    engine.rootContext()->setContextProperty("backend", &backendOperations);
     engine.load(url);
 
     return app.exec();

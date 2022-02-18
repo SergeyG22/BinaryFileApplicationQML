@@ -48,7 +48,7 @@ Window {
                 }
 
                 onClicked: {
-                    topFileDialog.open();
+                      topFileDialog.open();
                 }
         }
 
@@ -108,6 +108,16 @@ Window {
                     border.width: 1
                     radius: 10
                 }
+                onClicked: {
+
+                    if(listmodel.count > 0){
+                        listmodel.clear();
+                    }
+
+                    for (var prop in backend.binaryFindOperation(topEditbox.text,bottomEditbox.text)) {
+                         listmodel.append({"value": prop,"name":backend.binaryFindOperation(topEditbox.text,bottomEditbox.text)[prop] });
+                        }
+                }
         }
 
 
@@ -136,13 +146,10 @@ Window {
                     radius: 10
                 }
              onClicked: {
-                 listmodel.clear()
+                 listmodel.clear();
              }
 
         }
-
-
-
 
     }
 
@@ -215,19 +222,6 @@ Window {
 
         ListModel {
             id: listmodel
-            ListElement {
-                name: "file1.bin [EQUIALENT] file4.bin"
-            }
-            ListElement {
-                name: "file1.bin [EQUIALENT] file6.bin"
-            }
-            ListElement {
-                name: "file1.bin [EQUIALENT] file4.bin"
-            }
-            ListElement {
-                name: "file1.bin [EQUIALENT] file6.bin"
-            }
-
         }
 
         Component {
@@ -250,13 +244,14 @@ Window {
     }
 
     FileDialog {
+
                 id: topFileDialog
                 title: "Open file dialog"
                 folder: shortcuts.home
                 selectFolder: true
                 modality : Qt.WindowModal
                 onAccepted: {
-                    topEditbox.text = topFileDialog.folder
+                    topEditbox.text = urlToPath(topFileDialog.folder)
                  }
             }
 
@@ -267,7 +262,7 @@ Window {
                 selectFolder: true
                 modality : Qt.WindowModal
                 onAccepted: {
-                    bottomEditbox.text = bottomFileDialog.folder
+                    bottomEditbox.text = urlToPath(bottomFileDialog.folder);
                  }
             }
 
