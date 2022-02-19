@@ -4,4 +4,4 @@ class Libraries(ConanFile):
 	name = "Libraries"
 	settings = "os","compiler","build_type","arch"
 	generators = "cmake","cmake_find_package"
-	requires = [("sfml/2.5.1"),("boost/1.78.0")]
+	requires = [("boost/1.78.0")]

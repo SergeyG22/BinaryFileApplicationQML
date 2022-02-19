@@ -115,3 +115,5 @@ nmake Release
 Run the program and select the example folder in the root of the source directory. Specify the path to binary_a and binary_b folders. Click [Search]. A list of duplicates will be displayed.
 
 ### Preview
+
+![hippo](https://github.com/SergeyG22/BinaryFileApplicationQML/blob/master/doc/animation.gif)
