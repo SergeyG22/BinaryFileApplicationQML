@@ -10,8 +10,9 @@ QVariantMap BackendOperations::binaryFindOperation(QString pathA, QString pathB)
         boost::iostreams::mapped_file_source fileA;
         boost::iostreams::mapped_file_source fileB;
 
-        QVariantMap lines;
         int position = 0;
+        QVariantMap lines;
+        QSet<QString>duplicatePaths;
 
         if (boost::filesystem::exists(boost::filesystem::path(folderA)) &&
             boost::filesystem::exists(boost::filesystem::path(folderB))) {
@@ -50,16 +51,34 @@ QVariantMap BackendOperations::binaryFindOperation(QString pathA, QString pathB)
                         fileB.close();
                     }
 
+
+                    bool exclude = false;
+                    for(auto& duplicate : duplicatePaths){
+                        if(duplicate == secondIt->path().string().c_str()){
+                            exclude = true;
+                            break;
+                        }
+                    }
+
+                    if(exclude){
+                        continue;
+                    }
+
                     if (fileA.size() && fileB.size()) {
                         if ((fileA.data() != nullptr) || (fileB.data() != nullptr)) {
 
                             if (fileA.size() == fileB.size() && boost::algorithm::equal(fileA.data(), fileA.data() + fileA.size(), fileB.data(),
                                 fileB.data() + fileB.size())) {
-                                  QString item = QString::fromUtf8(firstIt->path().filename().string().c_str())
+
+                              QString duplicate = QString::fromUtf8(secondIt->path().string().c_str());
+                              duplicatePaths.insert(duplicate);
+
+                                QString item = QString::fromUtf8(firstIt->path().filename().string().c_str())
                                                  + " [EQUIALENT] " +
                                                  QString::fromUtf8(secondIt->path().filename().string().c_str());
-                                  lines.insert(QString::number(position),item);
-                                  position++;
+                                lines.insert(QString::number(position),item);
+                                position++;
+                                break;
                             }
                         }
                     }
@@ -68,6 +87,7 @@ QVariantMap BackendOperations::binaryFindOperation(QString pathA, QString pathB)
             }
 
         }
+
 
   return lines;
 }

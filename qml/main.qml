@@ -123,8 +123,9 @@ Window {
                         listmodel.clear();
                     }
 
-                    for (var index in backend.binaryFindOperation(topEditbox.text,bottomEditbox.text)) {
-                         listmodel.append({"index": index,"name":backend.binaryFindOperation(topEditbox.text,bottomEditbox.text)[index] });
+                    var getBackend = backend.binaryFindOperation(topEditbox.text,bottomEditbox.text);
+                    for (var index in getBackend) {
+                          listmodel.append({"index": index,"name":getBackend[index] });
                         }
                 }
         }
